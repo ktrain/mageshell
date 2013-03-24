@@ -25,6 +25,12 @@ if (version_compare(phpversion(), '5.2.0', '<')) {
 }
 
 /**
+ * Add the parent directory to the include path
+ */
+$magePath = dirname(dirname(__FILE__));
+set_include_path(get_include_path() . PATH_SEPARATOR . $magePath);
+
+/**
  * Error reporting
  */
 error_reporting(E_ALL | E_STRICT);
@@ -32,20 +38,23 @@ error_reporting(E_ALL | E_STRICT);
 /**
  * Load optional local.json config file
  */
-$env = json_decode(file_get_contents("app/etc/local.json"), true);
-foreach ($env as $key => $value) {
-    putenv($key . '=' . $value);
+$localConfigFilename = $magePath . '/app/etc/local.json';
+if (file_exists($localConfigFilename)) {
+    $env = json_decode(file_get_contents($localConfigFilename), true);
+    foreach ($env as $key => $value) {
+        putenv($key . '=' . $value);
+    }
 }
 
 /**
  * Compilation includes configuration file
  */
-$compilerConfig = 'includes/config.php';
+$compilerConfig = $magePath . '/includes/config.php';
 if (file_exists($compilerConfig)) {
     include $compilerConfig;
 }
 
-$mageFilename = 'app/Mage.php';
+$mageFilename = $magePath . '/app/Mage.php';
 
 if (!file_exists($mageFilename)) {
     echo $mageFilename." was not found";

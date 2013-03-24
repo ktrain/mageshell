@@ -35,6 +35,8 @@ as well as the class if the result is an object, is always printed.
 If the result is a ```Varien_Object```, then its data is printed.
 Data from collections is suppressed in order to avoid unwanted ```load()``` calls.
 
+The ```;``` at the end of commands is optional.
+
 
 ###### Example
 
