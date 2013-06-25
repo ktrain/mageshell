@@ -7,7 +7,7 @@ function usage()
     exit;
 }
 
-$options = getopt('u:p:');
+$options = getopt('u:p:a');
 
 if (isset($options['h'])) {
     usage();
@@ -15,7 +15,7 @@ if (isset($options['h'])) {
 
 $argc = count($argv);
 
-if (!in_array($argc, array(1, 4))) {
+if (!in_array($argc, array(1, 2, 4))) {
     usage();
 }
 
@@ -100,6 +100,9 @@ if (isset($options['u']) && isset($options['p'])) {
     } else {
         echo "Logged in as {$user->getUsername()}\n";
     }
+} else if (isset($options['a'])) {
+    Mage::app()->setCurrentStore('admin');
+    echo "Using admin context.\n";
 } else {
     echo "No admin login.\n";
 }

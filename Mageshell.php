@@ -34,7 +34,7 @@ class Mageshell
             try {
                 $result = eval($cmd);
             } catch (Exception $e) {
-                echo $e->getMessage() . "\n\n" . $e->getTraceAsString() . "\n\n";
+                $result = $e->getMessage() . "\n\n" . $e->getTraceAsString() . "\n\n";
             }
 
             $output = $this->_formatOutput($result);
