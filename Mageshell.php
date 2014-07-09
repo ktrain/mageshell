@@ -84,22 +84,14 @@ class Mageshell
 
         foreach ($data as $i => $item) {
             if (is_object($item)) {
-                $data [$i] = "**CLASS: " . get_class($item) . "**";
+                $data [$i] = get_class($item);
             }
             if (is_array($item)) {
-                $subitem_entry = "**ARRAY[";
-                // clean inner array for objects and arrays so we dont print too much
-                foreach ($item as &$subitem) {
-                    if (is_object($subitem)) {
-                        $subitem = "**CLASS: " . get_class($subitem) . "**";
-                    }
-                    if (is_array($subitem)) {
-                        $subitem = "**ARRAY[**hidden**]**";
-                    }
+                if (empty($item)) {
+                    $data [$i] = "Array()";
+                } else {
+                    $data [$i] = "Array(...)";
                 }
-                // add the inner array data separated by commas
-                $data [$i] .= implode(", ", $item);
-                $data [$i] .= "]**";
             }
         }
 
